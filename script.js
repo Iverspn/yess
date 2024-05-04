@@ -1,4 +1,4 @@
- <script>
+
         const needsHelp = confirm('Do you need help calculating your average score?');  
   
   if (needsHelp) {  
@@ -26,4 +26,4 @@
   } else {  
       console.log('error');  
   }
-    </script>
+
