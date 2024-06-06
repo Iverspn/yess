@@ -90,15 +90,9 @@
       </center> 
 <script>  
 function getCookie(name) {  
-    // ... 实现获取cookie的逻辑 ...  
-    // 这里只是一个示例，你可能需要使用更复杂的逻辑来解析cookie字符串  
-    var cookies = document.cookie.split('; ');  
-    for (var i = 0; i < cookies.length; i++) {  
-        var cookie = cookies[i].split('=');  
-        if (cookie[0] === name) {  
-            return cookie[1];  
-        }  
-    }  
+    var value = `; ${document.cookie}`;  
+    var parts = value.split(`; ${name}=`);  
+    if (parts.length === 2) return parts.pop().split(';').shift();  
     return null;  
 }  
   
