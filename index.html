@@ -1,13 +1,229 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <script src="script.js"></script>  
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+<meta charset="UTF-8">  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+<title>shopping cart</title>
+<link rel="stylesheet" href="style.css"> 
+
+<nav>  
+    <ul>  
+        <li><a href="index.html">Home</a></li>  
+        <li><a href="aboutus.html">About Us</a></li>  
+        <li><a href="course.html">Courseware</a></li>  
+        <li><a href="showcase.html">showcase</a></li>  
+    </ul>  
+</nav>  
+        <center>
+<img src="pgp.png" width="700px" height="500px"></img>
+    </center> 
+</head>  
+<body>  
+  <center>
+    <p id="name-display"></p>
+<h1>Resource Kits</h1>  
+<div id="products">  
+    <div class="product">  
+        <h2>ICT664</h2>  
+        <p>Price: $18</p>  
+        <input type="number" id="ICT664-quantity" value="0" min="0">  <br><br>
+        <button class="buttons" onclick="addToCart608('ICT664', 18)">Add to cart</button>  
+    </div>  
+    <div class="product">  
+        <h2>ICT486</h2>  
+        <p>Price: $25</p>  
+        <input type="number" id="ICT486-quantity" value="0" min="0">  <br><br>
+        <button class="buttons" onclick="addToCart608('ICT486', 25)">Add to cart</button>  
+    </div>  
+    <div class="product">  
+        <h2>ICT112</h2>  
+        <p>Price: $30</p> 
+        <input type="number" id="ICT112-quantity" value="0" min="0">  <br><br>
+ 
+        <button class="buttons" onclick="addToCart608('ICT112', 30)">Add to cart</button>  
+    </div>  
+    <div class="product">  
+        <h2>ICT227</h2>  
+        <p>Price: $42</p>  
+        <input type="number" id="ICT227-quantity" value="0" min="0">  <br><br>
+        <button class="buttons" onclick="addToCart608('ICT227', 42)">Add to cart</button>  
+    </div>  
+    <div class="product">  
+        <h2>ICT556</h2>  
+        <p>Price: $50</p>  
+        <input type="number" id="ICT556-quantity" value="0" min="0">  <br><br>
+        <button class="buttons" onclick="addToCart608('ICT556', 50)">Add to cart</button>  
+    </div>  
+    <div class="product">  
+        <h2>ICT116</h2>  
+        <p>Price: $65</p>  
+        <input type="number" id="ICT116-quantity" value="0" min="0">  <br><br>
+        <button class="buttons" onclick="addToCart608('ICT116', 65)">Add to cart</button>  
+    </div>  
+    <div class="product">  
+        <h2>ICT602</h2>  
+        <p>Price: $48</p>  
+        <input type="number" id="ICT602-quantity" value="0" min="0">  <br><br>
+        <button class="buttons" onclick="addToCart608('ICT602', 48)">Add to cart</button>  
+    </div>
+    <div class="product">  
+        <h2>ICT441</h2>  
+        <p>Price: $32</p>  
+        <input type="number" id="ICT441-quantity" value="0" min="0">  <br><br>
+        <button class="buttons" onclick="addToCart608('ICT441', 32)">Add to cart</button>  
+    </div>    
+</div>  
+ <div class="line">
+
+ </div>
+<h1>Shopping cart</h1>  
+<div id="cart">  
+    <div id="cart-items"></div>  
    
-    
-</body>
-</html> 
+
+
+</div>  
+
+<button class="clear" onclick="clearCart608()">clear Cart</button>
+<button id="calculate-total-price-button">Checkout</button>  
+<P id="totalPrice"></P>
+      </center> 
+<script>  
+function getCookie(name) {  
+    // ... 实现获取cookie的逻辑 ...  
+    // 这里只是一个示例，你可能需要使用更复杂的逻辑来解析cookie字符串  
+    var cookies = document.cookie.split('; ');  
+    for (var i = 0; i < cookies.length; i++) {  
+        var cookie = cookies[i].split('=');  
+        if (cookie[0] === name) {  
+            return cookie[1];  
+        }  
+    }  
+    return null;  
+}  
+  
+// 检查用户是否登录的函数  
+function checkUserLogin() {  
+    var authToken = getCookie("passwor"); // 假设cookie名为'auth_token'  
+    if (!authToken || authToken === '') {  
+        // 如果cookie不存在或为空，重定向到登录页面  
+        window.location.href = 'login.html';  
+    } else {  
+        // 如果cookie存在，则显示购物车内容或执行其他操作  
+        // 这里只是简单地显示一条消息，你可以根据需要替换为加载购物车数据等操作  
+        document.getElementById('cartContainer').textContent = 'Welcome to your cart! You are logged in.';  
+        // 你也可以在这里发送请求到服务器以获取购物车数据  
+    }  
+}  
+  
+// 在DOM加载完成后调用检查登录的函数  
+document.addEventListener('DOMContentLoaded', function() {  
+    checkUserLogin();  
+});
+
+
+
+let cart = [];  
+  
+function addToCart608(courseName, price) {  
+    const quantity = document.getElementById(`${courseName}-quantity`).value;  
+    if (quantity > 0) {  
+        cart.push({ name: courseName, price: price, quantity: quantity });  
+        displayCart608();  
+         
+    } else {  
+        alert('error');  
+    }  
+}  
+  
+// Function to display the cart items on the page  
+function displayCart608() {  
+    // Get the element where cart items will be displayed  
+    const cartItemsElement = document.getElementById('cart-items');  
+  
+    // Clear the current content of the cart items element  
+    cartItemsElement.innerHTML = '';  
+  
+    // Iterate over each item in the cart  
+    cart.forEach(item => {  
+        // Create a new div element to represent a cart item  
+        const cartItemElement = document.createElement('div');  
+  
+        // Add the 'cart-item' class to the cart item element  
+        cartItemElement.classList.add('cart-item');  
+  
+        // Set the inner HTML of the cart item element with the item details  
+        cartItemElement.innerHTML = `  
+            <h3>${item.name}</h3>  
+            <p>unit price: ${item.price}</p>  
+            <p>quantity: ${item.quantity}</p>  
+            <p>Price: ${item.price * item.quantity}</p>  
+            <button id="remove" onclick="removeFromCart608('${item.name}')">Remove</button>  
+        `;  
+  
+        // Append the cart item element to the cart items element  
+        cartItemsElement.appendChild(cartItemElement);  
+    });  
+}  
+  
+// Function to remove an item from the cart  
+function removeFromCart608(courseName) {  
+    // Filter the cart to remove the item with the specified name  
+    cart = cart.filter(item => item.name !== courseName);  
+  
+    // Update the display of the cart  
+    displayCart608();  
+  
+    // Recalculate the total price after removing the item  
+    calculateTotalPrice608();  
+}  
+  
+// Function to clear the cart  
+function clearCart608() {  
+    // Empty the cart array  
+    cart = [];  
+  
+    // Update the display of the cart  
+    displayCart608();  
+  
+    // Set the total price to 0  
+    document.getElementById('totalPrice').textContent = '0';  
+}  
+  
+// Function to calculate the total price of the cart  
+function calculateTotalPrice608() {  
+    // Use the reduce function to calculate the total price of all items in the cart  
+    let total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);  
+  
+    // Set the total price on the page, formatted to 2 decimal places  
+    document.getElementById('totalPrice').textContent = total.toFixed(2);  
+}  
+  
+// Add an event listener to the 'calculate-total-price-button' to calculate the total price  
+document.getElementById('calculate-total-price-button').addEventListener('click', calculateTotalPrice608);  
+  
+// When the window loads, display the cart and its items  
+window.onload = function() {  
+    displayCart608();  
+};
+
+
+
+
+
+</script>  
+<footer>  
+    <div class="footer-links">  
+      <a href="tel:+1234567890"><i class="fas fa-phone"></i> +123 456 7890</a>  
+      <a href="mailto:info@eitschool.com"><i class="fas fa-envelope"></i> info@eitschool.com</a>  
+      <a href="https://www.facebook.com/eitschool" target="_blank"><i class="fab fa-facebook-square"></i> Facebook</a>  
+      <a href="https://www.twitter.com/eitschool" target="_blank"><i class="fab fa-twitter-square"></i> Twitter</a>  
+      <a href="https://www.instagram.com/eitschool" target="_blank"><i class="fab fa-instagram-square"></i> Instagram</a>  
+    </div>  
+    <div class="copyright">  
+      <p>&copy; 2024 Electronic Information Training School. All rights reserved.</p>  
+      <p><a href="sitemap.xml">Site Map</a> | <a href="privacy.html">Privacy Policy</a></p>  
+    </div>  
+  </footer> 
+</body>  
+</html>
